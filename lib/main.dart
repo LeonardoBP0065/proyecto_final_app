@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'historia_page.dart'; 
+import 'servicios_page.dart'; 
 
 void main() {
   runApp(const MyApp());
@@ -130,8 +131,12 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.build),
                 title: Text('Servicios'),
                 onTap: () {
-                  // Acción para Servicios
+                  // Navegar a la página de servicios
                   Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ServiciosPage()),
+                  );
                 },
               ),
               ListTile(
