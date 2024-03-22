@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'historia_page.dart'; 
 
 void main() {
   runApp(const MyApp());
@@ -117,8 +118,12 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.book),
                 title: Text('Historia'),
                 onTap: () {
-                  // Acción para Historia
+                  // Navegar a la página de historia
                   Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HistoriaPage()),
+                  );
                 },
               ),
               ListTile(
