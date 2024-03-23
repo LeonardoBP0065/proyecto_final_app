@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'historia_page.dart'; 
 import 'servicios_page.dart'; 
+import 'noticias_page.dart';
+import 'videos_page.dart'; 
 
 void main() {
   runApp(const MyApp());
@@ -139,22 +141,30 @@ class MyHomePage extends StatelessWidget {
                   );
                 },
               ),
-              ListTile(
+             ListTile(
                 leading: Icon(Icons.newspaper),
                 title: Text('Noticias'),
                 onTap: () {
-                  // Acción para Noticias
+                  // Navegar a la página de noticias
                   Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NoticiasPage()),
+                  );
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.video_library),
-                title: Text('Videos'),
-                onTap: () {
-                  // Acción para Videos
-                  Navigator.pop(context);
-                },
-              ),
+            ListTile(
+              leading: Icon(Icons.video_library),
+              title: Text('Videos'),
+              onTap: () {
+                // Acción para Videos
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VideosPage()),
+                );
+              },
+            ),
               ListTile(
                 leading: Icon(Icons.house),
                 title: Text('Albergues'),
