@@ -3,6 +3,7 @@ import 'historia_page.dart';
 import 'servicios_page.dart'; 
 import 'noticias_page.dart';
 import 'videos_page.dart'; 
+import 'albergues_page.dart'; 
 
 void main() {
   runApp(const MyApp());
@@ -169,9 +170,13 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.house),
                 title: Text('Albergues'),
                 onTap: () {
-                  // Acción para Albergues
-                  Navigator.pop(context);
-                },
+                // Acción para Albergues
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AlberguesPage()),
+                );
+              },
               ),
               ListTile(
                 leading: Icon(Icons.map),
