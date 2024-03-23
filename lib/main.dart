@@ -5,6 +5,8 @@ import 'noticias_page.dart';
 import 'videos_page.dart'; 
 import 'albergues_page.dart'; 
 import 'medidas_preventivas_page.dart';
+import 'miembros.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -203,9 +205,13 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.people),
                 title: Text('Miembros'),
                 onTap: () {
-                  // Acción para Miembros
-                  Navigator.pop(context);
-                },
+                // Acción para Albergues
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MiembrosPage()),
+                );
+              },
               ),
               ListTile(
                 leading: Icon(Icons.fitness_center),
