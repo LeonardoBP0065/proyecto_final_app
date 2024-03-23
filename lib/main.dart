@@ -4,6 +4,7 @@ import 'servicios_page.dart';
 import 'noticias_page.dart';
 import 'videos_page.dart'; 
 import 'albergues_page.dart'; 
+import 'medidas_preventivas_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -189,10 +190,14 @@ class MyHomePage extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.warning),
                 title: Text('Medidas Preventivas'),
-                onTap: () {
-                  // Acción para Medidas Preventivas
-                  Navigator.pop(context);
-                },
+               onTap: () {
+                // Acción para Albergues
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MedidasPreventivasPage()),
+                );
+              },
               ),
               ListTile(
                 leading: Icon(Icons.people),
