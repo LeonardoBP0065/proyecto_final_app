@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'historia_page.dart'; 
-import 'servicios_page.dart'; 
+import 'historia_page.dart';
+import 'servicios_page.dart';
 import 'noticias_page.dart';
-import 'videos_page.dart'; 
-import 'albergues_page.dart'; 
+import 'videos_page.dart';
+import 'albergues_page.dart';
 import 'medidas_preventivas_page.dart';
 import 'miembros.dart';
-
+import 'voluntario_page.dart'; // Importamos la nueva página
 
 void main() {
   runApp(const MyApp());
@@ -145,7 +145,7 @@ class MyHomePage extends StatelessWidget {
                   );
                 },
               ),
-             ListTile(
+              ListTile(
                 leading: Icon(Icons.newspaper),
                 title: Text('Noticias'),
                 onTap: () {
@@ -157,29 +157,29 @@ class MyHomePage extends StatelessWidget {
                   );
                 },
               ),
-            ListTile(
-              leading: Icon(Icons.video_library),
-              title: Text('Videos'),
-              onTap: () {
-                // Acción para Videos
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => VideosPage()),
-                );
-              },
-            ),
+              ListTile(
+                leading: Icon(Icons.video_library),
+                title: Text('Videos'),
+                onTap: () {
+                  // Acción para Videos
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => VideosPage()),
+                  );
+                },
+              ),
               ListTile(
                 leading: Icon(Icons.house),
                 title: Text('Albergues'),
                 onTap: () {
-                // Acción para Albergues
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AlberguesPage()),
-                );
-              },
+                  // Acción para Albergues
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AlberguesPage()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.map),
@@ -192,26 +192,26 @@ class MyHomePage extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.warning),
                 title: Text('Medidas Preventivas'),
-               onTap: () {
-                // Acción para Albergues
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MedidasPreventivasPage()),
-                );
-              },
+                onTap: () {
+                  // Acción para Medidas Preventivas
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MedidasPreventivasPage()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.people),
                 title: Text('Miembros'),
                 onTap: () {
-                // Acción para Albergues
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MiembrosPage()),
-                );
-              },
+                  // Acción para Miembros
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MiembrosPage()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.fitness_center),
@@ -219,6 +219,10 @@ class MyHomePage extends StatelessWidget {
                 onTap: () {
                   // Acción para Quiero ser Voluntario
                   Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => VoluntarioPage()),
+                  );
                 },
               ),
               Divider(),
