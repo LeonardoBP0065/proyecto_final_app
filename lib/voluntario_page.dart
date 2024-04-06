@@ -54,7 +54,7 @@ class _VoluntarioPageState extends State<VoluntarioPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiero ser Voluntario'),
+        title: Text('Alístate con nosotros!'),
       ),
       body: _isLoading
           ? Center(
@@ -67,6 +67,13 @@ class _VoluntarioPageState extends State<VoluntarioPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              SizedBox(height: 20),
+              Icon(
+                Icons.group,
+                size: 50,
+                color: Colors.blue,
+              ),
+              SizedBox(height: 10),
               TextFormField(
                 controller: _cedulaController,
                 decoration: InputDecoration(labelText: 'Cédula'),
