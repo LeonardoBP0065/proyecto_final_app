@@ -7,7 +7,8 @@ import 'albergues_page.dart';
 import 'medidas_preventivas_page.dart';
 import 'miembros.dart';
 import 'voluntario_page.dart';
-import 'acerca_de_page.dart'; // Importa la página Acerca de
+import 'acerca_de_page.dart';
+import 'login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -245,6 +246,10 @@ class MyHomePage extends StatelessWidget {
                 onTap: () {
                   // Acción para Iniciar Sesión
                   Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
                 },
               ),
             ],

@@ -42,6 +42,15 @@ class _VoluntarioPageState extends State<VoluntarioPage> {
         _message = responseData['mensaje'];
         _isLoading = false;
       });
+
+      // Limpiar los campos de texto después de enviar el formulario
+      _cedulaController.clear();
+      _nombreController.clear();
+      _apellidoController.clear();
+      _claveController.clear();
+      _correoController.clear();
+      _telefonoController.clear();
+
     } catch (error) {
       setState(() {
         _message = 'Error: $error';
@@ -49,6 +58,7 @@ class _VoluntarioPageState extends State<VoluntarioPage> {
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
