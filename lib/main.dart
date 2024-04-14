@@ -1,125 +1,267 @@
 import 'package:flutter/material.dart';
+import 'historia_page.dart';
+import 'servicios_page.dart';
+import 'noticias_page.dart';
+import 'videos_page.dart';
+import 'albergues_page.dart';
+import 'albergues_map_page.dart';
+import 'medidas_preventivas_page.dart';
+import 'miembros.dart';
+import 'voluntario_page.dart';
+import 'acerca_de_page.dart';
+import 'login_page.dart';
+
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MyHomePage extends StatelessWidget {
+  MyHomePage({Key? key}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  final List<String> images = [
+    'https://i0.wp.com/ensegundos.do/wp-content/uploads/2021/12/6c77068d5ebd8d9047ee3d10335381cc.jpg?resize=1200%2C640&ssl=1',
+    'https://actualidadinfo.files.wordpress.com/2011/12/fotos-011.jpg',
+    'https://media.todojujuy.com/p/2949403da55c41dd01a93faad45740aa/adjuntos/227/imagenes/000/362/0000362497/defensa-civil.jpg?0000-00-00-00-00-00'
+  ];
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+      body: Stack(
+        children: [
+          PageView.builder(
+            itemCount: images.length,
+            itemBuilder: (context, index) {
+              return Image.network(
+                images[index],
+                fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width,
+              );
+            },
+          ),
+          Positioned(
+            top: 40,
+            left: 20,
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              child: Builder(
+                builder: (context) => IconButton(
+                  icon: Icon(Icons.menu),
+                  color: Colors.black,
+                  onPressed: () {
+                    Scaffold.of(context)?.openDrawer();
+                  },
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 20,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              color: Colors.white.withOpacity(0.8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Protegiendo a la Comunidad',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    'La Defensa Civil RD se dedica a proteger vidas y hogares en la República Dominicana. Con protocolos actualizados y respuesta eficiente, trabajamos para mitigar riesgos y mantener la seguridad de la comunidad. Únete a nosotros para construir un futuro más seguro y resiliente para todos.',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      drawer: SizedBox(
+        width: MediaQuery.of(context).size.width / 2,
+        child: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                child: Text(
+                  'Funcionalidades Principales',
+                  style: TextStyle(color: Colors.white, fontSize: 24),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Inicio'),
+                onTap: () {
+                  // Acción para Inicio
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.book),
+                title: Text('Historia'),
+                onTap: () {
+                  // Navegar a la página de historia
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HistoriaPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.build),
+                title: Text('Servicios'),
+                onTap: () {
+                  // Navegar a la página de servicios
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ServiciosPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.newspaper),
+                title: Text('Noticias'),
+                onTap: () {
+                  // Navegar a la página de noticias
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NoticiasPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.video_library),
+                title: Text('Videos'),
+                onTap: () {
+                  // Acción para Videos
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => VideosPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.house),
+                title: Text('Albergues'),
+                onTap: () {
+                  // Acción para Albergues
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AlberguesPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.map),
+                title: Text('Mapa de Albergues'),
+                onTap: () {
+                  // Acción para Mapa Albergues
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AlberguesMapPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.warning),
+                title: Text('Medidas Preventivas'),
+                onTap: () {
+                  // Acción para Medidas Preventivas
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MedidasPreventivasPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.people),
+                title: Text('Miembros'),
+                onTap: () {
+                  // Acción para Miembros
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MiembrosPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.fitness_center),
+                title: Text('Quiero ser Voluntario'),
+                onTap: () {
+                  // Acción para Quiero ser Voluntario
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => VoluntarioPage()),
+                  );
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text('Acerca de'),
+                onTap: () {
+                  // Acción para Acerca de
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AcercaDePage()),
+                  );
+                },
+              ),
+             ListTile(
+              leading: Icon(Icons.login),
+              title: Text('Iniciar Sesión'),
+              onTap: () {
+                // Acción para Iniciar Sesión
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginForm()),
+                );
+              },
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
