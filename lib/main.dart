@@ -4,11 +4,13 @@ import 'servicios_page.dart';
 import 'noticias_page.dart';
 import 'videos_page.dart';
 import 'albergues_page.dart';
+import 'albergues_map_page.dart';
 import 'medidas_preventivas_page.dart';
 import 'miembros.dart';
 import 'voluntario_page.dart';
 import 'acerca_de_page.dart';
 import 'login_page.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -187,8 +189,12 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.map),
                 title: Text('Mapa de Albergues'),
                 onTap: () {
-                  // Acción para Mapa de Albergues
+                  // Acción para Mapa Albergues
                   Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AlberguesMapPage()),
+                  );
                 },
               ),
               ListTile(
@@ -240,18 +246,18 @@ class MyHomePage extends StatelessWidget {
                   );
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.login),
-                title: Text('Iniciar Sesión'),
-                onTap: () {
-                  // Acción para Iniciar Sesión
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                  );
-                },
-              ),
+             ListTile(
+              leading: Icon(Icons.login),
+              title: Text('Iniciar Sesión'),
+              onTap: () {
+                // Acción para Iniciar Sesión
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginForm()),
+                );
+              },
+            ),
             ],
           ),
         ),

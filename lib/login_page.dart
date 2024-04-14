@@ -1,260 +1,148 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'post_login_page.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginForm extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginFormState extends State<LoginForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  bool _isLoading = false;
   String _message = '';
 
-  Future<void> _login() async {
-    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-      setState(() {
-        _message = 'Por favor, ingrese su correo electrónico y contraseña.';
-      });
+  Future<void> _handleLogin() async {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
-    await Future.delayed(Duration(seconds: 2));
 
     setState(() {
-      _message = 'Inicio de sesión exitoso!';
+      _isLoading = true;
     });
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PostLoginPage()),
-    );
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://adamix.net/defensa_civil/def/iniciar_sesion.php'),
+        body: {
+          'cedula': email,
+          'clave': password,
+        },
+      );
+
+      final responseData = json.decode(response.body);
+
+      if (responseData['exito'] != null && responseData['exito'] == true) {
+        setState(() {
+          _message = 'Inicio de sesión exitoso';
+          _isLoading = false;
+        });
+        print('Respuesta del servidor: $responseData');
+
+        final String? token = responseData['token'];
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => PostLoginPage(token: token)),
+        );
+      } else {
+        setState(() {
+          _message = 'Error al iniciar sesión';
+          _isLoading = false;
+        });
+        print('Error al iniciar sesión: $responseData');
+      }
+    } catch (error) {
+      setState(() {
+        _message = 'Error al iniciar sesión: $error';
+        _isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Iniciar Sesión'),
+        title: Text('Inicio de Sesión'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Icon(
-                Icons.account_circle,
-                size: 100,
-                color: Colors.blue,
-              ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: 'Correo Electrónico'),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Contraseña'),
-                obscureText: true,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _login,
-                child: Text('Iniciar Sesión'),
-              ),
-              SizedBox(height: 10),
-              if (_message.isNotEmpty)
-                Text(
-                  _message,
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class PostLoginPage extends StatelessWidget {
-  void _navigateToSpecificNews(BuildContext context) {
-    // Lógica para redireccionar a la página de noticias específicas
-    print('Navegar a Noticias Específicas');
-  }
-
-  void _reportSituation(BuildContext context) {
-    // Lógica para redireccionar a la página de reportar situación
-    print('Navegar a Reportar Situación');
-  }
-
-  void _navigateToMySituations(BuildContext context) {
-    // Lógica para redireccionar a la página de mis situaciones
-    print('Navegar a Mis Situaciones');
-  }
-
-  void _navigateToMap(BuildContext context) {
-    // Lógica para redireccionar a la página de mapa de situaciones
-    print('Navegar a Mapa de Situaciones');
-  }
-
-  void _changePassword(BuildContext context) {
-    // Lógica para redireccionar a la página de cambio de contraseña
-    print('Navegar a Cambiar Contraseña');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Menú de Opciones'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () => _navigateToSpecificNews(context),
-              child: Container(
-                color: Colors.blue,
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              padding: EdgeInsets.all(20),
+              child: Form(
+                key: _formKey,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Icon(
-                      Icons.article,
-                      size: 50,
-                      color: Colors.white,
+                    Text(
+                      'Inicio de Sesión',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Cédula',
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor ingrese su cédula';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      'Noticias Específicas',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Contraseña',
                       ),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor ingrese su contraseña';
+                        }
+                        return null;
+                      },
                     ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _handleLogin,
+                      child: Text('Iniciar Sesión'),
+                    ),
+                    SizedBox(height: 10),
+                    if (_message.isNotEmpty)
+                      Text(
+                        _message,
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                   ],
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => _reportSituation(context),
-              child: Container(
-                color: Colors.green,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.report,
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Reportar Situación',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => _navigateToMySituations(context),
-              child: Container(
-                color: Colors.orange,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.list_alt,
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Mis Situaciones',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => _navigateToMap(context),
-              child: Container(
-                color: Colors.purple,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.map,
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Mapa Situaciones',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => _changePassword(context),
-              child: Container(
-                color: Colors.red,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.lock,
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Cambiar Contraseña',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
 
 void main() {
   runApp(MaterialApp(
-    home: LoginPage(),
+    home: LoginForm(),
   ));
 }
