@@ -7,36 +7,52 @@ class AcercaDePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Acerca de'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 20),
-          Image.asset(
-            'lib/assets/icono.png',
-            width: 100,
-            height: 100,
-          ),
-          SizedBox(height: 10),
-          Text(
-            'Desarrolladores',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 20),
+            Image.asset(
+              'lib/assets/icono.png',
+              width: 100,
+              height: 100,
             ),
-          ),
-          SizedBox(height: 20),
-          _buildDeveloperCard(
-            name: 'Adalberto Banks Mendoza',
-            github: 'AdalBMdev',
-            email: '20220791@itla.edu.do',
-          ),
-          SizedBox(height: 20),
-          _buildDeveloperCard(
-            name: 'Leonardo Felipe Pérez Batista',
-            github: 'LeonardoBP0065',
-            email: '20220910@itla.edu.do',
-          ),
-        ],
+            SizedBox(height: 10),
+            Text(
+              'Desarrolladores',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20),
+            _buildDeveloperCard(
+              name: 'Adalberto Banks Mendoza',
+              github: 'AdalBMdev',
+              email: '20220791@itla.edu.do',
+              image: 'adal.png',
+            ),
+            SizedBox(height: 20),
+            Image.asset(
+              'lib/assets/adal.png',
+              width: 100,
+              height: 100,
+            ),
+            SizedBox(height: 20),
+            _buildDeveloperCard(
+              name: 'Leonardo Felipe Pérez Batista',
+              github: 'LeonardoBP0065',
+              email: '20220910@itla.edu.do',
+              image: 'leo.png',
+            ),
+            SizedBox(height: 20),
+            Image.asset(
+              'lib/assets/leo.png',
+              width: 100,
+              height: 100,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -45,6 +61,7 @@ class AcercaDePage extends StatelessWidget {
     required String name,
     required String github,
     required String email,
+    required String image,
   }) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 20),

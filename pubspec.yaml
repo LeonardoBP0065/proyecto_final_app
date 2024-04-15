@@ -27,6 +27,8 @@ flutter:
   assets:
     - lib/assets/icono.png
     - lib/assets/voluntario.png
+    - lib/assets/adal.png
+    - lib/assets/leo.png
 
 
 
